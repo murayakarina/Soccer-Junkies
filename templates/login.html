@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f5f7fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .login-container {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        width: 300px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+        color: #555;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+    }
+
+    .error-message {
+        color: #d9534f;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        border: none;
+        color: white;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .show-password {
+        font-size: 14px;
+        color: #444;
+    }
+  </style>
+</head>
+<body>
+<div class="login-container">
+  <h2>Login</h2>
+  {% if error %}
+  <p class="error-message">{{ error }}</p>
+  {% endif %}
+  <form method="POST">
+    <label>Email:</label>
+    <input type="email" name="username" required
+           title="Please enter a valid email address, e.g. user@example.com">
+
+    <label>Password:</label>
+    <input type="password" name="password" id="password" maxlength="6" required
+           pattern="(?=.*[\W_]).{1,6}"
+           title="Password must be 6 characters or fewer and include at least one special character (e.g. !, @, #, etc).">
+
+    <label class="show-password">
+      <input type="checkbox" onclick="togglePassword()"> Show Password
+    </label>
+
+    <button type="submit">Login</button>
+  </form>
+</div>
+
+<script>
+  function togglePassword() {
+      const passwordInput = document.getElementById("password");
+      passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+  }
+</script>
+</body>
+</html>
+

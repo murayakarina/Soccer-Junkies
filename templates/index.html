@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Index</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #e8f0fe;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .welcome-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .team-badge {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .team-badge span {
+            font-size: 1.2em;
+            margin-left: 10px;
+        }
+
+        .team-list {
+            height: 150px;
+            overflow-y: auto;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="welcome-container">
+    <h2>Welcome, {{ first_name }}!</h2>
+    <form id="teamForm" method="POST">
+        <label for="firstName">Your First Name:</label>
+        <input type="text" id="firstName" name="first_name" placeholder="Enter your first name" required>
+
+        <label for="team">Select your favorite team:</label><br>
+        <select id="team" name="team" size="3" style="width: 250px;">
+            <option value="Chelsea">Chelsea</option>
+            <option value="Manchester United">Manchester United</option>
+            <option value="Arsenal">Arsenal</option>
+            <option value="Barcelona">Barcelona</option>
+            <option value="Real Madrid">Real Madrid</option>
+            <option value="Inter Milan">Inter Milan</option>
+            <option value="AC Milan">AC Milan</option>
+            <option value="Juventus">Juventus</option>
+            <option value="Bayern Munich">Bayern Munich</option>
+            <option value="Paris Saint-Germain">Paris Saint-Germain</option>
+            <option value="Ajax">Ajax</option>
+            <option value="Atletico Madrid">Atletico Madrid</option>
+            <option value="Napoli">Napoli</option>
+            <option value="Borussia Dortmund">Borussia Dortmund</option>
+        </select>
+
+
+        <button type="submit">Submit</button>
+    </form>
+    <form action="/logout" method="post" style="text-align: right;">
+        <button type="submit" style="padding: 10px 15px; background-color: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Logout
+        </button>
+    </form>
+    <div id="badgeContainer" class="team-badge">
+        <span id="teamMessage">You are a certified <strong id="selectedTeam">[team name]</strong> fan!</span>
+    </div>
+</div>
+
+<script>
+    // This will listen to the form submission event
+    document.getElementById('teamForm').addEventListener('submit', function(event) {
+        event.preventDefault();  // Prevent form from submitting and refreshing the page
+
+        // Get values from form
+        var firstName = document.getElementById('firstName').value;
+        var selectedTeam = document.getElementById('team').value;
+
+        // Show the greeting with the first name
+        document.querySelector('h2').textContent = `Welcome, ${firstName}!`;
+
+        // Display the badge with the selected team
+        if (selectedTeam) {
+            document.getElementById('selectedTeam').textContent = selectedTeam;
+            document.getElementById('badgeContainer').style.display = 'block';
+        }
+    });
+</script>
+
+</body>
+</html>
