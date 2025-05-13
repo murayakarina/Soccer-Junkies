@@ -130,29 +130,34 @@
         </button>
     </form>
     <div id="badgeContainer" class="team-badge">
-        <span id="teamMessage">You are a certified <strong id="selectedTeam">[team name]</strong> fan!</span>
+        <span id="teamMessage"><strong id="userFirstName">[First Name]</strong>, you are a certified <strong id="selectedTeam">[Team]</strong> fan!</span>
     </div>
 </div>
 
 <script>
-    // This will listen to the form submission event
     document.getElementById('teamForm').addEventListener('submit', function(event) {
-        event.preventDefault();  // Prevent form from submitting and refreshing the page
+        event.preventDefault();
 
-        // Get values from form
-        var firstName = document.getElementById('firstName').value;
-        var selectedTeam = document.getElementById('team').value;
+        const firstName = document.getElementById('firstName').value;
+        const selectedTeam = document.getElementById('team').value;
 
-        // Show the greeting with the first name
         document.querySelector('h2').textContent = `Welcome, ${firstName}!`;
 
-        // Display the badge with the selected team
         if (selectedTeam) {
+            document.getElementById('userFirstName').textContent = firstName;
             document.getElementById('selectedTeam').textContent = selectedTeam;
             document.getElementById('badgeContainer').style.display = 'block';
+
+             confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
         }
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 
 </body>
 </html>
