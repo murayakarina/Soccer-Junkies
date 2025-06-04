@@ -4,9 +4,30 @@
     <meta charset="UTF-8">
     <title>Welcome to Index</title>
     <style>
+        :root {
+            --bg-color: #e8f0fe;
+            --text-color: #333;
+            --card-bg: white;
+            --input-bg: #fff;
+            --button-bg: #007bff;
+            --logout-bg: #e74c3c;
+            --badge-bg: #4CAF50;
+        }
+
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-color: #f0f0f0;
+            --card-bg: #1e1e1e;
+            --input-bg: #333;
+            --button-bg: #2196F3;
+            --logout-bg: #c0392b;
+            --badge-bg: #388e3c;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #e8f0fe;
+            background: var(--bg-color);
+            color: var(--text-color);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,44 +37,34 @@
         }
 
         .welcome-container {
-            background: white;
+            background: var(--card-bg);
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            width: 320px;
             text-align: center;
         }
 
         h2 {
             margin-bottom: 20px;
-            color: #333;
         }
 
         label {
             display: block;
             margin-bottom: 10px;
             font-weight: 500;
-            color: #555;
         }
 
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            margin-bottom: 15px;
-            box-sizing: border-box;
-        }
-
+        input[type="text"],
         select {
             width: 100%;
             padding: 10px;
             border-radius: 6px;
             border: 1px solid #ccc;
             margin-bottom: 15px;
+            background: var(--input-bg);
+            color: var(--text-color);
             box-sizing: border-box;
-            font-size: 16px;
-            color: #555;
         }
 
         .team-badge {
@@ -61,37 +72,46 @@
             margin-top: 20px;
             padding: 15px;
             border-radius: 8px;
-            background-color: #4CAF50;
+            background-color: var(--badge-bg);
             color: white;
             font-weight: bold;
-            text-transform: uppercase;
         }
 
-        .team-badge span {
-            font-size: 1.2em;
-            margin-left: 10px;
-        }
-
-        .team-list {
-            height: 150px;
-            overflow-y: auto;
+        .team-badge img {
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
+            margin-bottom: 10px;
         }
 
         button {
             width: 100%;
             padding: 10px;
-            background-color: #007bff;
+            background-color: var(--button-bg);
             border: none;
             color: white;
             border-radius: 6px;
             font-size: 16px;
             cursor: pointer;
             transition: background 0.3s;
-            margin-top: 20px;
         }
 
         button:hover {
-            background-color: #0056b3;
+            opacity: 0.9;
+        }
+
+        .logout-btn {
+            background-color: var(--logout-bg);
+            margin-top: 10px;
+        }
+
+        .toggle-dark {
+            margin-top: 15px;
+            font-size: 14px;
+            color: var(--text-color);
+            background: none;
+            border: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -99,12 +119,13 @@
 
 <div class="welcome-container">
     <h2>Welcome, {{ first_name }}!</h2>
+
     <form id="teamForm" method="POST">
         <label for="firstName">Your First Name:</label>
         <input type="text" id="firstName" name="first_name" placeholder="Enter your first name" required>
 
-        <label for="team">Select your favorite team:</label><br>
-        <select id="team" name="team" size="3" style="width: 250px;">
+        <label for="team">Select your favorite team:</label>
+        <select id="team" name="team" size="3">
             <option value="Chelsea">Chelsea</option>
             <option value="Manchester United">Manchester United</option>
             <option value="Arsenal">Arsenal</option>
@@ -121,20 +142,42 @@
             <option value="Borussia Dortmund">Borussia Dortmund</option>
         </select>
 
-
         <button type="submit">Submit</button>
     </form>
-    <form action="/logout" method="post" style="text-align: right;">
-        <button type="submit" style="padding: 10px 15px; background-color: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">
-            Logout
-        </button>
+
+    <form action="/logout" method="post">
+        <button type="submit" class="logout-btn">Logout</button>
     </form>
+
+    <button class="toggle-dark" onclick="toggleDarkMode()">Toggle Dark Mode 🌙</button>
+
     <div id="badgeContainer" class="team-badge">
-        <span id="teamMessage"><strong id="userFirstName">[First Name]</strong>, you are a certified <strong id="selectedTeam">[Team]</strong> fan!</span>
+        <img id="teamLogo" src="" alt="Team Logo" style="display:none;">
+        <div id="teamMessage">
+            <strong id="userFirstName">[First Name]</strong>, you are a certified <strong id="selectedTeam">[Team]</strong> fan!
+        </div>
     </div>
 </div>
 
 <script>
+    const teamLogos = {
+  "Chelsea": "https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/Chelsea_FC.svg/120px-Chelsea_FC.svg.png",
+  "Manchester United": "https://upload.wikimedia.org/wikipedia/en/thumb/7/7a/Manchester_United_FC_crest.svg/120px-Manchester_United_FC_crest.svg.png",
+  "Arsenal": "https://upload.wikimedia.org/wikipedia/en/thumb/5/53/Arsenal_FC.svg/120px-Arsenal_FC.svg.png",
+  "Barcelona": "https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/120px-FC_Barcelona_%28crest%29.svg.png",
+  "Real Madrid": "https://upload.wikimedia.org/wikipedia/en/thumb/5/56/Real_Madrid_CF.svg/120px-Real_Madrid_CF.svg.png",
+  "Inter Milan": "https://upload.wikimedia.org/wikipedia/en/thumb/0/05/FC_Internazionale_Milano_2021.svg/120px-FC_Internazionale_Milano_2021.svg.png",
+  "AC Milan": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Logo_of_AC_Milan.svg/120px-Logo_of_AC_Milan.svg.png",
+  "Juventus": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Juventus_FC_2017_logo.svg/120px-Juventus_FC_2017_logo.svg.png",
+  "Bayern Munich": "https://upload.wikimedia.org/wikipedia/en/thumb/1/1f/FC_Bayern_München_logo_%282017%29.svg/120px-FC_Bayern_München_logo_%282017%29.svg.png",
+  "Paris Saint-Germain": "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/Paris_Saint-Germain_F.C..svg/120px-Paris_Saint-Germain_F.C..svg.png",
+  "Ajax": "https://upload.wikimedia.org/wikipedia/en/thumb/7/79/Ajax_Amsterdam.svg/120px-Ajax_Amsterdam.svg.png",
+  "Atletico Madrid": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f4/Atletico_Madrid_2017_logo.svg/120px-Atletico_Madrid_2017_logo.svg.png",
+  "Napoli": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/SSC_Neapel.svg/120px-SSC_Neapel.svg.png",
+  "Borussia Dortmund": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Borussia_Dortmund_logo.svg/120px-Borussia_Dortmund_logo.svg.png"
+};
+
+
     document.getElementById('teamForm').addEventListener('submit', function(event) {
         event.preventDefault();
 
@@ -146,18 +189,34 @@
         if (selectedTeam) {
             document.getElementById('userFirstName').textContent = firstName;
             document.getElementById('selectedTeam').textContent = selectedTeam;
+
+            const logoUrl = teamLogos[selectedTeam];
+            const logoImg = document.getElementById('teamLogo');
+
+            if (logoUrl) {
+                logoImg.src = logoUrl;
+                logoImg.alt = `${selectedTeam} Logo`;
+                logoImg.style.display = 'inline-block';
+            } else {
+                logoImg.style.display = 'none';
+            }
+
             document.getElementById('badgeContainer').style.display = 'block';
 
-             confetti({
+            confetti({
                 particleCount: 100,
                 spread: 70,
                 origin: { y: 0.6 }
             });
         }
     });
-</script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 </body>
 </html>
