@@ -5,113 +5,159 @@
     <title>Welcome to Index</title>
     <style>
         :root {
-            --bg-color: #e8f0fe;
-            --text-color: #333;
-            --card-bg: white;
-            --input-bg: #fff;
-            --button-bg: #007bff;
-            --logout-bg: #e74c3c;
-            --badge-bg: #4CAF50;
+          --bg-color: #e8f0fe;
+          --text-color: #333;
+          --card-bg: white;
+          --input-bg: #fff;
+          --button-bg: #007bff;
+          --logout-bg: #e74c3c;
+          --badge-bg: #4CAF50;
         }
 
         body.dark-mode {
-            --bg-color: #121212;
-            --text-color: #f0f0f0;
-            --card-bg: #1e1e1e;
-            --input-bg: #333;
-            --button-bg: #2196F3;
-            --logout-bg: #c0392b;
-            --badge-bg: #388e3c;
+          --bg-color: #121212;
+          --text-color: #f0f0f0;
+          --card-bg: #1e1e1e;
+          --input-bg: #333;
+          --button-bg: #2196F3;
+          --logout-bg: #c0392b;
+          --badge-bg: #388e3c;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100vh;
-            margin: 0;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background: var(--bg-color);
+          color: var(--text-color);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          height: 100vh;
+          margin: 0;
         }
 
         .welcome-container {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            width: 320px;
-            text-align: center;
+          background: var(--card-bg);
+          padding: 30px;
+          border-radius: 12px;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+          width: 320px;
+          text-align: center;
         }
 
         h2 {
-            margin-bottom: 20px;
+          margin-bottom: 20px;
         }
 
         label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 500;
+          display: block;
+          margin-bottom: 10px;
+          font-weight: 500;
         }
 
         input[type="text"],
         select {
-            width: 100%;
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            margin-bottom: 15px;
-            background: var(--input-bg);
-            color: var(--text-color);
-            box-sizing: border-box;
+          width: 100%;
+          padding: 10px;
+          border-radius: 6px;
+          border: 1px solid #ccc;
+          margin-bottom: 15px;
+          background: var(--input-bg);
+          color: var(--text-color);
+          box-sizing: border-box;
         }
 
         .team-badge {
-            display: none;
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: var(--badge-bg);
-            color: white;
-            font-weight: bold;
+          display: none;
+          margin-top: 20px;
+          padding: 15px;
+          border-radius: 8px;
+          background-color: var(--badge-bg);
+          color: white;
+          font-weight: bold;
         }
 
         .team-badge img {
-            width: 40px;
-            height: 40px;
-            vertical-align: middle;
-            margin-bottom: 10px;
+          width: 40px;
+          height: 40px;
+          vertical-align: middle;
+          margin-bottom: 10px;
         }
 
         button {
-            width: 100%;
-            padding: 10px;
-            background-color: var(--button-bg);
-            border: none;
-            color: white;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s;
+          width: 100%;
+          padding: 10px;
+          background-color: var(--button-bg);
+          border: none;
+          color: white;
+          border-radius: 6px;
+          font-size: 16px;
+          cursor: pointer;
+          transition: background 0.3s;
         }
 
         button:hover {
-            opacity: 0.9;
+          opacity: 0.9;
         }
 
         .logout-btn {
-            background-color: var(--logout-bg);
-            margin-top: 10px;
+          background-color: var(--logout-bg);
+          margin-top: 10px;
         }
 
-        .toggle-dark {
-            margin-top: 15px;
-            font-size: 14px;
-            color: var(--text-color);
-            background: none;
-            border: none;
-            cursor: pointer;
+        .dark-toggle-container {
+          margin-top: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 50px;
+          height: 24px;
+        }
+
+        .switch input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0; left: 0;
+          right: 0; bottom: 0;
+          background-color: #ccc;
+          transition: 0.4s;
+          border-radius: 24px;
+        }
+
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 18px;
+          width: 18px;
+          left: 3px;
+          bottom: 3px;
+          background-color: white;
+          transition: 0.4s;
+          border-radius: 50%;
+        }
+
+        input:checked + .slider {
+          background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+          transform: translateX(26px);
+        }
+
+        .toggle-label {
+          margin-left: 10px;
+          font-size: 14px;
         }
     </style>
 </head>
@@ -149,7 +195,13 @@
         <button type="submit" class="logout-btn">Logout</button>
     </form>
 
-    <button class="toggle-dark" onclick="toggleDarkMode()">Toggle Dark Mode 🌙</button>
+    <div class="dark-toggle-container">
+        <label class="switch">
+            <input type="checkbox" id="darkToggle">
+            <span class="slider"></span>
+        </label>
+        <span class="toggle-label">Dark Mode</span>
+    </div>
 
     <div id="badgeContainer" class="team-badge">
         <img id="teamLogo" src="" alt="Team Logo" style="display:none;">
@@ -161,59 +213,57 @@
 
 <script>
     const teamLogos = {
-  "Chelsea": "https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/Chelsea_FC.svg/120px-Chelsea_FC.svg.png",
-  "Manchester United": "https://upload.wikimedia.org/wikipedia/en/thumb/7/7a/Manchester_United_FC_crest.svg/120px-Manchester_United_FC_crest.svg.png",
-  "Arsenal": "https://upload.wikimedia.org/wikipedia/en/thumb/5/53/Arsenal_FC.svg/120px-Arsenal_FC.svg.png",
-  "Barcelona": "https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/120px-FC_Barcelona_%28crest%29.svg.png",
-  "Real Madrid": "https://upload.wikimedia.org/wikipedia/en/thumb/5/56/Real_Madrid_CF.svg/120px-Real_Madrid_CF.svg.png",
-  "Inter Milan": "https://upload.wikimedia.org/wikipedia/en/thumb/0/05/FC_Internazionale_Milano_2021.svg/120px-FC_Internazionale_Milano_2021.svg.png",
-  "AC Milan": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Logo_of_AC_Milan.svg/120px-Logo_of_AC_Milan.svg.png",
-  "Juventus": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Juventus_FC_2017_logo.svg/120px-Juventus_FC_2017_logo.svg.png",
-  "Bayern Munich": "https://upload.wikimedia.org/wikipedia/en/thumb/1/1f/FC_Bayern_München_logo_%282017%29.svg/120px-FC_Bayern_München_logo_%282017%29.svg.png",
-  "Paris Saint-Germain": "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/Paris_Saint-Germain_F.C..svg/120px-Paris_Saint-Germain_F.C..svg.png",
-  "Ajax": "https://upload.wikimedia.org/wikipedia/en/thumb/7/79/Ajax_Amsterdam.svg/120px-Ajax_Amsterdam.svg.png",
-  "Atletico Madrid": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f4/Atletico_Madrid_2017_logo.svg/120px-Atletico_Madrid_2017_logo.svg.png",
-  "Napoli": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/SSC_Neapel.svg/120px-SSC_Neapel.svg.png",
-  "Borussia Dortmund": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Borussia_Dortmund_logo.svg/120px-Borussia_Dortmund_logo.svg.png"
-};
-
+      "Chelsea": "https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/Chelsea_FC.svg/120px-Chelsea_FC.svg.png",
+      "Manchester United": "https://upload.wikimedia.org/wikipedia/en/thumb/7/7a/Manchester_United_FC_crest.svg/120px-Manchester_United_FC_crest.svg.png",
+      "Arsenal": "https://upload.wikimedia.org/wikipedia/en/thumb/5/53/Arsenal_FC.svg/120px-Arsenal_FC.svg.png",
+      "Barcelona": "https://upload.wikimedia.org/wikipedia/en/thumb/4/47/FC_Barcelona_%28crest%29.svg/120px-FC_Barcelona_%28crest%29.svg.png",
+      "Real Madrid": "https://upload.wikimedia.org/wikipedia/en/thumb/5/56/Real_Madrid_CF.svg/120px-Real_Madrid_CF.svg.png",
+      "Inter Milan": "https://upload.wikimedia.org/wikipedia/en/thumb/0/05/FC_Internazionale_Milano_2021.svg/120px-FC_Internazionale_Milano_2021.svg.png",
+      "AC Milan": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Logo_of_AC_Milan.svg/120px-Logo_of_AC_Milan.svg.png",
+      "Juventus": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Juventus_FC_2017_logo.svg/120px-Juventus_FC_2017_logo.svg.png",
+      "Bayern Munich": "https://upload.wikimedia.org/wikipedia/en/thumb/1/1f/FC_Bayern_München_logo_%282017%29.svg/120px-FC_Bayern_München_logo_%282017%29.svg.png",
+      "Paris Saint-Germain": "https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/Paris_Saint-Germain_F.C..svg/120px-Paris_Saint-Germain_F.C..svg.png",
+      "Ajax": "https://upload.wikimedia.org/wikipedia/en/thumb/7/79/Ajax_Amsterdam.svg/120px-Ajax_Amsterdam.svg.png",
+      "Atletico Madrid": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f4/Atletico_Madrid_2017_logo.svg/120px-Atletico_Madrid_2017_logo.svg.png",
+      "Napoli": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/SSC_Neapel.svg/120px-SSC_Neapel.svg.png",
+      "Borussia Dortmund": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Borussia_Dortmund_logo.svg/120px-Borussia_Dortmund_logo.svg.png"
+    };
 
     document.getElementById('teamForm').addEventListener('submit', function(event) {
-        event.preventDefault();
+      event.preventDefault();
+      const firstName = document.getElementById('firstName').value;
+      const selectedTeam = document.getElementById('team').value;
 
-        const firstName = document.getElementById('firstName').value;
-        const selectedTeam = document.getElementById('team').value;
+      document.querySelector('h2').textContent = `Welcome, ${firstName}!`;
 
-        document.querySelector('h2').textContent = `Welcome, ${firstName}!`;
+      if (selectedTeam) {
+        document.getElementById('userFirstName').textContent = firstName;
+        document.getElementById('selectedTeam').textContent = selectedTeam;
 
-        if (selectedTeam) {
-            document.getElementById('userFirstName').textContent = firstName;
-            document.getElementById('selectedTeam').textContent = selectedTeam;
+        const logoUrl = teamLogos[selectedTeam];
+        const logoImg = document.getElementById('teamLogo');
 
-            const logoUrl = teamLogos[selectedTeam];
-            const logoImg = document.getElementById('teamLogo');
-
-            if (logoUrl) {
-                logoImg.src = logoUrl;
-                logoImg.alt = `${selectedTeam} Logo`;
-                logoImg.style.display = 'inline-block';
-            } else {
-                logoImg.style.display = 'none';
-            }
-
-            document.getElementById('badgeContainer').style.display = 'block';
-
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
+        if (logoUrl) {
+          logoImg.src = logoUrl;
+          logoImg.alt = `${selectedTeam} Logo`;
+          logoImg.style.display = 'inline-block';
+        } else {
+          logoImg.style.display = 'none';
         }
+
+        document.getElementById('badgeContainer').style.display = 'block';
+
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      }
     });
 
-    function toggleDarkMode() {
-        document.body.classList.toggle('dark-mode');
-    }
+    document.getElementById('darkToggle').addEventListener('change', function() {
+      document.body.classList.toggle('dark-mode');
+    });
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
